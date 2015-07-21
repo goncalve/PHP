@@ -1,0 +1,327 @@
+\documentclass{article}
+% Pour les caractères accentues et les titres de sections
+\usepackage[latin1]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+\definecolor{violet}{rgb}{0.5,0,0.5}
+\lstset{upquote=true}
+
+
+%------------------------------
+%---- la taille de la page ----
+%------------------------------
+\voffset 0.5cm
+\hoffset 0.7cm
+\textheight 22cm
+\textwidth 14.6cm
+\topmargin 0.0cm
+\oddsidemargin 0.0cm
+\evensidemargin 0.0cm
+
+% Pour les en-têtes et pieds de pages
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage}
+\renewcommand\headrulewidth{1pt}
+\fancyhead[L]{IUT A. Lyon1\\
+Informatique}
+\fancyhead[C]{Langage PHP\\
+2ème année}
+\fancyhead[R]{TD 01 - PHP, Transmission de données\\
+Correction}
+\renewcommand\footrulewidth{1pt}
+\fancyfoot[C]{\textbf{- \thepage/\pageref{LastPage} -}}
+\fancyfoot[R]{\today}
+
+\title{TD 01 -PHP, Transmission de données} 
+\author{Isabelle Gonçalves} 
+
+\begin{document}
+%
+\large\bf{Exercice 1 : helloV1.php}
+
+\lstset{language=HTML, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{cyan}, breaklines=true, tabsize=1}
+
+\begin{lstlisting}
+<!DOCTYPE html> 
+<HTML>
+<HEAD>
+   <meta charset="utf-8">
+   <TITLE>Des Hellos</TITLE> 
+</HEAD>
+
+<BODY>
+  <ul>
+    <?php
+     for($i=0; $i<10; $i++)
+     {
+         echo '  <li> Hello World! </li>'; 
+         echo "\n";  /* pour introduire des sauts de ligne 
+                          dans le code HTML généré        */
+     }
+    ?>
+  </ul> 
+</BODY> 
+</HTML>
+
+\end{lstlisting}
+
+\small Ne pas oublier que le code généré doit pour chaque exercice passer le valideur HTML5: \\
+ http\string://validator.w3.org/ \\
+
+\large\bf{Exercice 2 : helloV2.php}
+
+\lstset{language=HTML, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{cyan}, breaklines=true, tabsize=1}
+
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>Des Hellos 2</TITLE>
+</HEAD>
+<ul>
+<BODY>
+  <?php
+   if (isset($_GET['nbhello'])) /* teste que le paramètre 
+                                 est passé dans l'URL */
+   {
+     $nb = (int) $_GET['nbhello']; // neutralisation par cast
+     if ($nb>0 && $nb<=100)
+       for($i=0; $i<$nb; $i++)
+         echo '<li> Hello World! </li>';
+     else 
+         echo '<h1> Valeur nbhello incorrecte dans l\'URL !</h1>';
+   } 
+   else
+     echo '<h1> Pas de valeur de nbhello dans l\'URL !</h1>';
+  ?>
+</ul>
+</BODY>
+</HTML>
+
+\end{lstlisting}
+
+\begin{small}
+  
+A tester sans paramètre dans l'URL: \\
+http...helloV2.php\\
+A tester avec un paramètre dans la gamme attendue dans l'URL: \\
+http...helloV2.php?nbhello=15\\
+A tester avec un paramètre hors de la gamme attendue dans l'URL: \\
+http...helloV2.php?nbhello=150\\
+\end{small}
+
+\large\bf{Exercice 3 : helloV3.php}
+
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>Des Hellos 3</TITLE>
+</HEAD>
+<BODY>
+
+  <FORM action="helloV3.php" method="post">
+    <label for="nbhello">Combien de Hello ?</label>
+    <input type="text" id="nbhello" name="nbhello" size="3" maxlength="3" autofocus 
+    <?php 
+      if(isset($_POST['nbhello'])){
+        $nb=(int)$_POST['nbhello'];
+        echo ' value="'.$nb.'"';}
+     // cette ligne ci-dessus ajoute le champ value 
+     // si le formulaire a été validé
+     // afin de garder la valeur tapée.
+    ?>
+    /> <!-- Fin de la balise input -->
+  </FORM>
+
+  <ul>
+  <?php
+  if (isset($nb))
+  {
+    if ($nb>0 && $nb<=100)
+      for($i=1; $i<=$nb; $i++)
+      {
+        echo '<li> Hello World! </li>';
+        if($i%10==0)
+          echo '<li>'.$i.'</li>';
+      }
+    else 
+      echo '<h1> Valeur incorrecte !</h1>';
+  }
+  ?>
+  </ul>
+</BODY>
+</HTML>
+
+\end{lstlisting}
+
+\begin{small}
+  
+Il ne faut pas d'affichage d'erreur quand la page est chargée la première fois.
+Il faut tester en ne proposant pas de valeur, ou une valeur en dehors de la gamme attendue.\\
+Remarque : le fait de taper sur la touche "entrée" équivaut à valider le formulaire. On aurait aussi pu mettre un bouton "valider" dans le formulaire.\\
+
+\end{small}
+
+\large\bf{Exercice 4 : helloV4.php}
+
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>Des Hellos 4</TITLE>
+	<link rel="stylesheet" href="helloV4.css"/>
+</HEAD>
+<BODY>
+<FORM action="helloV4.php" method="post">
+  <label for="nbhello">Combien de Hello ?</label>
+  <input type="text" id="nbhello" name="nbhello" size="3" maxlength="3" autofocus 
+    <?php if(isset($_POST['nbhello'])){
+      $nb=(int)$_POST['nbhello'];
+      echo ' value="'.$nb.'"';}
+     // cette ligne ci-dessus ajoute le champ value si le formulaire 
+     // a été validé afin de garder la valeur tapée.
+    ?>
+  /> <!-- Fin de la balise input -->
+</FORM>
+
+  <ul>
+<?php
+    if (isset($nb))
+    {
+    	if ($nb>0 && $nb<=100)
+    	  for($i=1; $i<=$nb; $i++)
+    	  {
+		    if($i%2==0)
+		      echo '<li class="paire"> Hello World! </li>';
+		    else
+		      echo '<li class="impaire"> Hello World! </li>';
+		    if($i%10==0)
+		      echo '<li>'.$i.'</li>';
+		  }
+		else 
+		  echo '<h1> Valeur incorrecte !</h1>';
+	}
+?>
+
+  </ul>
+</BODY>
+</HTML>
+
+\end{lstlisting}
+
+\large\bf{Exercice 4 : helloV4.css}
+
+\begin{lstlisting}
+.paire
+{
+  color: blue;
+}
+
+.impaire
+{
+  color: red;
+}
+\end{lstlisting}
+
+\large\bf{Exercice 5 : impots.php}
+
+\lstset{language=HTML ,commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{cyan}, breaklines=true, tabsize=1}
+
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE>Prévision des impôts</TITLE>
+</HEAD>
+\end{lstlisting}
+\lstset{
+  language        = php,
+  basicstyle      = \small\ttfamily,
+  keywordstyle    = \color{blue},
+  stringstyle     = \color{violet},
+  identifierstyle = \color{magenta},
+  commentstyle    = \color{cyan},
+  emph            =[1]{php},
+  emphstyle       =[1]\color{black},
+  emph            =[2]{if,and,or,else},
+  emphstyle       =[2]\color{red}}
+\begin{lstlisting}
+<?php
+  // Partie calcul à séparer quand c'est possible de l'affichage
+    if(isset($_POST['nbenfants']) AND isset($_POST['salaire']))
+    {   
+    	$nb=(int)$_POST['nbenfants']; //neutralisation par cast
+        $sal=(float)$_POST['salaire']; //neutralisation par cast
+        // calcul du quotient familial
+    	$parts = $nb/2+1;
+    	if (isset($_POST['mariage']))
+    	  $parts++;
+    	$qf = (0.72 * $sal)/$parts;
+        // calcul de l'impôt
+    	$imp=0;
+        $bornesMin=array(66680, 24873, 11199, 5615);
+        $taux=array(0.4, 0.3, 0.14, 0.055);
+        $nbTranchesImposees=4;
+
+        for($i=0;$i<$nbTranchesImposees; $i++)
+        {
+          if ($qf>=$bornesMin[$i])
+          {
+            $tranche=$qf -($bornesMin[$i]-1);
+            $imp+=$tranche*$taux[$i];
+            $qf-=$tranche;
+          }
+        }
+    	$imp=$imp*$parts; 
+    }
+?>
+\end{lstlisting}
+
+\lstset{language=HTML ,commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{cyan}, breaklines=true, tabsize=1}
+
+\begin{lstlisting}
+<!-- Partie affichage -->
+<BODY>
+<FORM action="impots.php" method="post">
+  <p><label for="nbenfants">Nombre d'enfants :</label>
+  <input type="text" name="nbenfants" id="nbenfants" size="3" maxlength="3" autofocus required 
+  <?php if(isset($nb))
+    echo ' value="'.$nb.'"'; ?>
+  /> <!-- Fin de la balise input -->
+  </p>
+  <p><label for="mariage">Marié :</label>
+  <input type="checkbox" name="mariage" id="mariage" 
+  <?php if(isset($_POST['mariage']))
+    echo ' checked'; ?>
+  /> <!-- Fin de la balise input -->
+  </p>
+  <p><label for="salaire">Salaire annuel :</label>
+  <input type="text" name="salaire" id="salaire"  size="30" maxlength="30" autofocus required 
+  <?php if(isset($sal))
+    echo ' value='.$sal; ?>
+  /> <!-- Fin de la balise input -->
+  </p>
+  <input type="submit" value="calculer" />
+</FORM>
+
+<?php
+  if(isset($imp))
+	  echo '<p>Votre impôt prévisionnel est de : '. $imp . ' &euro;';
+?>
+
+</BODY>
+</HTML>
+
+
+\end{lstlisting}
+
+
+
+
+\end{document}
