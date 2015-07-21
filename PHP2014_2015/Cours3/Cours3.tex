@@ -1,0 +1,158 @@
+\documentclass{beamer}
+\title{Programmation Web}
+%\institute {TP2}
+\date{\today}
+
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usetheme{Madrid}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{textcomp}
+
+
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+%\usecolortheme{seagull}
+\definecolor{fondtitre}{rgb}{0.20,0.43,0.09}  % vert fonce
+\definecolor{coultitre}{rgb}{0.41,0.05,0.05}  % marron
+%\setbeamercolor{normal text}{fg=black}
+%\setbeamercolor{alerted text}{fg=black}
+%\setbeamercolor{frametitle}{fg=black,bg=white}
+%\setbeamercolor{section in head/foot}{fg=black,bg=white}
+%\setbeamercolor{subsection in head/foot}{fg=black,bg=white}
+%\setbeamercolor{author in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title in head/foot}{fg=black,bg=white}
+%\setbeamercolor{date in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title}{bg=white}
+%\setbeamercolor{titlelike}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+
+\lstset{upquote=true}
+
+% Debut - Rédaction du diaporama
+\begin{document}
+
+ %Une page de présentation
+\begin{frame}
+\titlepage
+ \end{frame}
+
+\begin{frame} {Design Pattern (masques de conception)}
+\begin{itemize}
+	\item répondent à des problématiques de conception récurrentes,
+	\item correspondent à un ensemble de bonnes pratiques 
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {Le pattern MVC : Model, View, Controler}
+\begin{itemize}
+	\item C'est une architecture applicative donc une façon d'organiser  le code source d'une application.
+	\item Il consiste à découper le code de cette application en séparant clairement :
+	\begin{itemize}
+		\item Une partie modèle
+		\item Une partie vue
+		\item Une partie contrôleur
+	\end{itemize}
+	\item C'est l'architecture utilisée par le framework PHP Symfony 2.
+\end{itemize}
+\begin{block}{Framework}
+C'est un ensemble de composants qui sert à créer les fondations, l'architecture et les grandes lignes d'un logiciel.
+\end{block}
+
+\end{frame}
+
+\begin{frame}  {La partie Vue}
+\begin{itemize}
+	\item C'est la partie affichage
+	\item Elle contient le code HTML
+	\item Elle contient un peu de code PHP (boucles, conditions) pour l'affichage du contenu des variables
+	\item C'est la problématique présentation
+	\item C'est le designer du projet qui travaille sur les vues
+ \end{itemize}
+\end{frame}
+
+\begin{frame}  {La partie Modèle}
+\begin{itemize}
+	\item Elle contient la logique métier (business logic)
+	\item C'est la problématique traitement / calculs
+	\item Elle contient aussi tout ce qui concerne l'accès aux données
+	\item C'est là qu'on trouvera les requêtes SQL
+\end{itemize}
+\end{frame}
+
+\begin{frame}   {La partie Contrôleur}
+\begin{itemize}
+	\item Fait le lien entre l'utilisateur et le reste de l'application
+	\item  Il est la couche qui se charge d'analyser et de traiter la requête de l'utilisateur.
+	\item  Il demande au modèle les données, les traite et appelle la vue qui utilisera ces données pour afficher la page.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Représentation Schématique (1/2) :}
+\begin{center}
+  \begin{minipage}{\linewidth}
+  		\centering
+           	 \includegraphics[width=7cm]{MVCFrench.png}
+  \end{minipage}
+
+		Source image : OpenClassrooms %la légende
+\end{center}
+ \end{frame}
+ 
+ \begin{frame}{Représentation Schématique (2/2) :}
+\begin{center}
+  \begin{minipage}{\linewidth}
+  		\centering
+           	 \includegraphics[width=7cm]{mvc_symfony2.png}
+  \end{minipage}
+
+		Source image : Documentation Symfony %la légende
+\end{center}
+ \end{frame}
+ 
+ \begin{frame}{Avantages du pattern MVC}
+ \begin{itemize}
+	\item Code clair, bien organisé, gage de réutilisabilité
+	\item Découpage standard qui permet aux autres développeurs de rapidement rentrer dans votre code
+	\item Découpage des responsabilités qui permet à des développeurs avec différents profils de travailler sur un projet
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {Bufferisation de sortie}
+\begin{itemize}
+	\item \textbf{ob\string_start()} démarre la temporisation de sortie. Tant qu'elle est enclenchée, aucune donnée, hormis les en-têtes, n'est envoyée au navigateur, mais temporairement mise en tampon.
+	\item \textbf{ob\string_get\string_clean()} lit le contenu courant du tampon de sortie puis l'efface. Retourne le contenu sous forme de chaîne de caractères.
+\end{itemize}
+\end{frame}
+
+ \begin{frame}[fragile]{Documenter les fonctions et méthodes : PHPDoc}
+ \begin{itemize}
+	\item A l'intérieur du code source
+	\item Sous forme de DocBlock
+	\item Permet la génération automatique d'une documentation (PHPDocumentor...)
+\end{itemize}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+ /**
+  * A summary (short)
+  *
+  * A *description* (long)
+  *
+  * @param string $myArgument 
+  *
+  * @return void
+  */
+  function myFunction($myArgument)
+  {
+  }
+\end{lstlisting}
+
+\end{frame}
+
+\end{document}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="formulaire.css">
+    <title> Formulaire </title>
+  </head>
+  <body>
+    <FORM action="http://champin.net/enseignement/intro-web/_static/formproc/debug" method="GET">
+
+    <h1> Les champs de saisie </h1>
+    <h2> Texte monoligne simple</h2>
+	<label for="pseudo">Nom :</label>
+	<input type="text" name="pseudo" id="pseudo" size="50" maxlength="50">
+    <h2> Un mot de passe</h2>
+	<label for="motdepasse">Mot de passe :</label>
+	<input type="password" id="motdepasse" name="motdepasse" size="50" maxlength="50">
+	<h2> Les mêmes avec placeholder au lieu du label</h2>
+	<input placeholder="identifiant">
+	<input type="password" placeholder="mot de passe">
+	
+	
+    <h2> Les cases à cocher indépendantes</h2>	
+	<input type="checkbox" name="visiteur" id="visiteur"><label for="visiteur">visiteur</label>
+	<input type="checkbox" name="administrateur" id="administrateur"><label for="administrateur">administrateur</label>
+	<input type="checkbox" name="expert" id="expert"><label for="expert">expert</label>
+	<h2> Les cases à cocher [n'envoient rien - test des label]</h2>	
+	<label><input type="checkbox" >visiteur</label>
+	<label><input type="checkbox" >administrateur</label>
+	<label><input type="checkbox" >expert</label>
+	<h2> Les cases à cocher liées </h2>	
+	<label><input type="checkbox" name="statut" value="vis">visiteur</label>
+	<label><input type="checkbox" name="statut" value="admin">administrateur</label>
+	<label><input type="checkbox" name="statut" value="exp">expert</label>
+
+    <h2> Les boutons radio</h2>	
+	<p>Etes-vous fumeur ? </p>
+	<input type="radio" name="fumeur" id="oui" value="oui"><label for="oui">Oui</label>
+	<input type="radio" name="fumeur" id="non" value="non" checked><label for="non">Non</label>
+	
+    <h2> Les fichiers</h2>
+        <label for="monfichier">Fichier ? </label>
+	<input type="file" name="monfichier" id="monfichier">
+	
+ <h1> Les listes monochoix avec un seul choix possible</h1>
+    <label for="beatles1"> Votre Beatles préféré :</label>
+     <select name="beatles1" id="beatles1">
+  		 <option value="Georges">Georges</option>
+ 		 <option value="John">John</option>
+ 		 <option value="Paul">Paul</option>
+  		<option value="Ringo">Ringo</option>
+     </select>
+     
+ <h1> Les listes à choix multiples</h1>
+    <label for="beatles2"> Votre Beatles préféré :</label>
+     <select name="beatles2" id="beatles2" multiple>
+  		 <option value="Georges">Georges</option>
+ 		 <option value="John">John</option>
+ 		 <option value="Paul">Paul</option>
+  		<option value="Ringo">Ringo</option>
+     </select>
+    
+ <h1> Les entrées de texte multiligne </h1>
+	
+	<textarea  name="message" rows="8" cols="45" maxlength="5000" placeholder="Votre message ici"></textarea>
+
+	
+	<input type="hidden" name="source" value="formulaire.html">
+	
+	<p><input type="submit" value="Valider">
+	<input type="reset" value="Effacer"></p>
+	
+</FORM>
+	</body>
+</html>
+
+

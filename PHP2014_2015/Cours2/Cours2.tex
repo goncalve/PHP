@@ -1,0 +1,269 @@
+\documentclass{beamer}
+\title{Programmation Web}
+%\institute {TP2}
+\date{\today}
+
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usetheme{Madrid}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{textcomp}
+
+
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+%\usecolortheme{seagull}
+\definecolor{fondtitre}{rgb}{0.20,0.43,0.09}  % vert fonce
+\definecolor{coultitre}{rgb}{0.41,0.05,0.05}  % marron
+%\setbeamercolor{normal text}{fg=black}
+%\setbeamercolor{alerted text}{fg=black}
+%\setbeamercolor{frametitle}{fg=black,bg=white}
+%\setbeamercolor{section in head/foot}{fg=black,bg=white}
+%\setbeamercolor{subsection in head/foot}{fg=black,bg=white}
+%\setbeamercolor{author in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title in head/foot}{fg=black,bg=white}
+%\setbeamercolor{date in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title}{bg=white}
+%\setbeamercolor{titlelike}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+
+\lstset{upquote=true}
+
+% Debut - Rédaction du diaporama
+\begin{document}
+
+ %Une page de présentation
+\begin{frame}
+\titlepage
+ 
+\end{frame}
+
+
+\begin{frame}  {Les variables superglobales}
+\begin{itemize}
+	\item Elles sont écrites en majuscules avec un underscore au début
+	\item Ce sont des tableaux associatifs : des ensembles de clé/valeur
+	\item Elles sont créées à chaque chargement de page 
+\end{itemize}
+
+\begin{itemize}
+	\item \$\_GET contient les données envoyées par l'URL
+	\item \$\_POST contient les informations transmises par les formulaires avec la méthode POST
+	\item \$\_FILES contient la liste des fichiers envoyés par un formulaire
+	\item \$\_SERVER Ce sont des valeurs renvoyées par le serveur. \$\_SERVER['REMOTE\_ADDR'] donne l'adresse IP du client qui demande le chargement de la page.
+	\item \$\_SESSION contient les variables de session
+	\item \$\_COOKIE contient les valeurs des cookies enregistrés sur l'ordinateur du visiteur
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]  {Les tableaux associatifs}
+\begin{itemize}
+	\item Les clés peuvent être des entiers ou des chaînes de caractères
+	\item Les clés et les valeurs peuvent être de types différents dans un même tableau
+\end{itemize}
+
+Création
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+$prenoms=array('François', 'Michel', 'Nicole'); 
+#crée un tableau numéroté avec des clés qui vont de 0 à 2
+$prenoms[]='Véronique'; # la clé sera la clé entière max du tableau + 1 donc ici 3 
+$coords = array (
+    'prenom' => 'François',
+    'nom' => 'Dupont',
+    'adresse' => '3 rue du Paradis',
+    'ville' =>'Paris' );
+ $coords['code_postal']='75012'; #creation d'une nouvelle case
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]  {Parcourir un tableau}
+Connaître sa taille ou l'afficher pour debugging:
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   $taille = count($tab);
+   $champs = array_keys($coords);
+   print_r($tab);
+\end{lstlisting}
+	
+Pour parcourir les éléments et/ou les clés :
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   for ($i=0; $i<$taille; $i++) 
+      echo $prenoms[$i];
+   foreach ($prenoms as $val) 
+      echo $val;
+   foreach ($coords as $val) 
+      echo $val;
+   foreach ($coords as $cle => $val) 
+      echo $cle.' vaut '.$val;
+   foreach ($prenoms as $cle => $val) 
+      echo $cle.' vaut '.$val;
+\end{lstlisting}
+
+Destruction d'un élément du tableau :
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   unset($prenoms[0]); # ça ne décale rien
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]  {Fonction}
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+
+  function nomDeLaFonction($param1, $param2=5)
+  {
+    // Bloc d'instructions
+    return $variableContenantValeurDeRetour;
+  }
+
+\end{lstlisting}
+\begin{itemize}
+	\item Une fonction peut retourner 
+	\begin{itemize}
+		\item rien (procédure)
+		\item une seule valeur de type simple
+		\item un type structuré comme un tableau ou un objet
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {PHP et Bases de données}
+\begin{itemize}
+	\item PHP peut s'utiliser avec différents SGBD : \textbf{MySQL}, Oracle, PostgreSQL, ...
+	\item Interfaces web d'administration des bases de données écrites en PHP : \textbf{PHPMyAdmin} (MySQL), phpPgAdmin (PostgreSQL), ...
+	\begin{itemize}
+		\item http\string://iutdoua-webetu.univ-lyon1.fr/phpMyAdmin
+		\item http\string://localhost\string:[port\_apache]/phpMyAdmin/
+	\end{itemize}
+	\item Plusieurs façons d'accéder à la base de données à partir d'un script PHP
+	\begin{itemize}
+		\item des extensions spécifiques des SGBD : MySQL ou MySQLi
+		\item des interfaces d'accès aux bases de données \textbf{PDO} (PHP Data Objects), DBAL ...  qui permettent de faire abstraction du SGBD utilisé.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {PDO}
+\begin{itemize}
+	\item A partir de PHP5
+	\item Il faut que l'extension PDO soit activée
+	\item Il faut le pilote MySQL pour PDO
+\end{itemize}
+
+\begin{block}{Remarque}
+phpinfo() permet de savoir quel fichier de configuration php.ini est utilisé par le serveur, ainsi que les extensions et pilotes activés. 
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]  {Connexion à une base de données MySQL : Cinema.php}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+function connexion_db ()
+{
+  $host ="localhost"; $user ="pxxxx";
+  $password ="xxxxxx"; /* Numéro BIP*/
+  $nombase ="pxxxx";
+  try
+  {
+    $bdd=new PDO('mysql:host='. $host .'; dbname='.$nombase , $user , $password );
+  }
+  catch ( Exception $e)
+  {
+    die ('Erreur : '.$e->getMessage());
+  }
+  $bdd->exec('SET NAMES utf8');
+  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  return $bdd ;}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]  {PDO: méthodes pour faire des requêtes}
+
+\begin{itemize}
+	\item requêtes avec SELECT
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+$req= $bdd->query('SELECT Titre, Année, Score, Votes from Movie');
+\end{lstlisting}
+Retourne un jeu de résultats sour forme d'objet PDOStatement.
+	\item requêtes avec modification des données dans la BD (UPDATE, INSERT,...)
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+$count = $bdd->exec("DELETE FROM fruit WHERE couleur = 'rouge'");
+\end{lstlisting}
+Retourne le nombres de lignes modifiées/effacées.
+\end{itemize}
+\begin{block}{A noter}
+Les requêtes SELECT effectuées avec un objet PDO retournent un objet PDOStatement. 
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]   {PDOStatement: quelques méthodes utiles}
+\begin{itemize}
+	\item compter le nombres de lignes sélectionnées.
+	 \lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+	\begin{lstlisting}
+	$count = $req->rowCount();
+	\end{lstlisting}
+	\item Récupération de toutes les lignes d'un jeu de résultats dans un tableau associatif
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+	\begin{lstlisting}
+$result = $req->fetchAll();
+print_r($result);
+	\end{lstlisting}
+	\item Récupération de la ligne suivante d'un jeu de résultats
+	 \lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+	\begin{lstlisting}
+	$result = $req->fetch(PDO::FETCH_ASSOC); /* résultat sera un tableau associatif */
+	\end{lstlisting}
+Retourne FALSE quand il n'y a plus de ligne dans le jeu.	
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]   {PDO: des requêtes avec des variables - prepare/execute}
+\begin{itemize}
+	\item avec des marqueurs
+ \lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+  $req1= $bdd->prepare('SELECT * FROM Casting WHERE MovieID = ? ORDER BY Ordinal');
+  $req1->execute(array($_GET['movieid']));
+\end{lstlisting}
+	\item avec des paramètres nommés
+\begin{lstlisting}
+  $req1= $bdd->prepare('SELECT * FROM Casting WHERE MovieID = :movieid ORDER BY Ordinal');
+  $req1->execute(array(':movieid' => $_GET['movieid']));
+\end{lstlisting}
+\end{itemize}
+\begin{block}{A noter}
+Ces méthodes protègent des injections de code SQL.
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]   {PDO: les exceptions}
+\begin{itemize}
+	\item Les objets de l'interface PDO utilisent des exceptions, il est donc tout à fait possible d'intégrer facilement un système de gestion des erreurs.
+	\item Pour cela, configurer l'objet de connexion comme ceci :
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+\end{lstlisting}	
+\end{itemize}
+\end{frame}
+
+\end{document}
