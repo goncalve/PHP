@@ -1,0 +1,270 @@
+\documentclass{beamer}
+\title{Programmation Web}
+%\institute {TP3}
+\date{\today}
+
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usetheme{Madrid}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{textcomp}
+
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+
+%\definecolor{fondtitre}{rgb}{0.20,0.43,0.09}  % vert fonce
+%\definecolor{coultitre}{rgb}{0.41,0.05,0.05}  % marron
+%\setbeamercolor{normal text}{fg=black}
+%\setbeamercolor{alerted text}{fg=black}
+%\setbeamercolor{frametitle}{fg=black,bg=white}
+%\setbeamercolor{section in head/foot}{fg=black,bg=white}
+%\setbeamercolor{subsection in head/foot}{fg=black,bg=white}
+%\setbeamercolor{author in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title in head/foot}{fg=black,bg=white}
+%\setbeamercolor{date in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title}{bg=white}
+%\setbeamercolor{titlelike}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+
+
+% Debut - Rédaction du diaporama
+\begin{document}
+
+ %Une page de présentation
+\begin{frame}
+\titlepage
+ 
+\end{frame}
+%
+%
+%\begin{frame}[fragile]  {Le contrôle d'accès avec Apache (1/2)}
+%\begin{itemize}
+%	\item Contrôle de l'accès à un dossier avec login/mot de passe
+%	\item Rien à voir ici avec PHP
+%	\item Fait intervenir deux fichiers : .htaccess qui doit être dans le répertoire dont l'accès est contrôlé et .htpasswd
+%	\item le htaccess peut également être utilisé pour limiter ou interdire l'accès à certains numéros IP, certains utilisateurs ou certains groupes.
+%\end{itemize}
+%Exemple pour le fichier .htaccess :
+%\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+%\begin{lstlisting}
+%AuthName "Connexion administrateur requise"
+%AuthType Basic
+%AuthUserFile "/home/UNIV-LYON1/isabelle.goncalves/public_html/TP3/Admin/.htpasswd"
+%Require valid-user
+%\end{lstlisting}
+%\begin{itemize}
+%	\item Pour trouver le chemin absolu pour un fichier sur un serveur
+%\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+%\begin{lstlisting}
+%	<?php echo realpath("index.php"); ?>
+%\end{lstlisting}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]  {Le contrôle d'accès avec Apache (1/2)}
+%Exemple de fichier .htpasswd
+%\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+%\begin{lstlisting}
+% fred:$1$nRSP5U.A$e8FqI6QTq/Bp6lNMjBUMO1
+% jul:$1$riMIdCaV$6GO24RT5v4iwrSzChZq720
+% monuser:$apr1$MWZtd0xs$mRBeIn.alFLzJZe4.r07U1
+%\end{lstlisting}
+%OU
+%\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+%\begin{lstlisting}
+% fred:kangourou
+% jul:totolitoto
+% monuser:monpass
+%\end{lstlisting}
+%
+%\begin{itemize}
+%	\item Pour crypter un mot de passe : l'utilitaire htpasswd avec l'option -n Usename
+%	\item http://shop.alterlinks.com/htpasswd/passwd.php
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}[fragile]  {Redirection en PHP}
+\begin{itemize}
+	\item Se fait à l'aide de la fonction header('Location: chemin') qui envoie une redirection au navigateur. 
+	
+\end{itemize}
+	
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+	<?php 
+    header('Location: index.php?status=right'); 
+    exit(0); // ou exit(); ou exit;
+	?>
+\end{lstlisting}
+\begin{itemize}
+	\item Pas d'espace avant les deux points et un espace après
+	\item Cette redirection doit être effectuée avant l'envoi de toute sortie au navigateur donc :
+	\begin{itemize}
+		\item aucun appel de la fonction echo avant notamment dans le PHP
+		\item pas d'espace ou de retour-charriot dans le HTML 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}  {Bufferisation de sortie}
+\begin{itemize}
+	\item \textbf{ob\string_start()} démarre la temporisation de sortie. Tant qu'elle est enclenchée, aucune donnée, hormis les en-têtes, n'est envoyée au navigateur, mais temporairement mise en tampon.
+	\item \textbf{ob\string_get\string_clean()} lit le contenu courant du tampon de sortie puis l'efface. Retourne le contenu sous forme de chaîne de caractères.
+	\item \textbf{ob\string_get\string_flush()} lit le contenu courant du tampon de sortie puis l'efface. Retourne le contenu sous forme de chaîne de caractères + stoppe la temporisation.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]  {Les sessions PHP (1/2)}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+  session_start(); 
+  $_SESSION['views'] = 1; // stocke une variable de session
+  echo "Pageviews = ". $_SESSION['views']; //accède à une variable de session
+?>
+\end{lstlisting}
+\begin{itemize}
+	\item session\_start() démarre le système de session et si le visiteur vient d'arriver un identifiant de session (PHPSESSID) est généré. Il sera transmis de page en page grâce à un cookie ou à défaut peut être transmis via l'URL.
+	\item \$\_SESSION est un tableau de variables superglobales qui persiste sur le serveur tant que la session n'est pas terminée. Pour pouvoir y accéder, il faut démarrer le système de session dans la page.
+	\item session\_start doit forcément être appelé en tout début de page.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]  {Les sessions PHP (2/2)}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+  // Détruit toutes les variables de session
+  $_SESSION = array();
+  // Détruit la session.
+  session_destroy();
+?>
+\end{lstlisting}
+\begin{itemize}
+	\item En pratique, les sessions sont automatiquement détruites au bout d'un certain temps d'inactivité ou si vous quittez votre navigateur.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]  {Gestion des mots de passe}
+\begin{itemize}
+	\item \textbf{password\string_hash(string \$password)} Crée un mot de passe haché pouvant être stocké dans une chaîne de 255 caractères.
+	\item \textbf{password\string_verify(string \$password, string \$hash)} vérifie qu'un mot de passe correspond à la version hachée.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]   {Les cookies}
+\begin{itemize}
+	\item Ce sont des informations qu'on peut stockées temporairement dans un fichier sur le poste du client
+	\item Création d'un cookie : set cookie (name, value, expire, path, domain, secure, httpOnly) 
+		\begin{itemize}
+			\item expire est une date d'expiration exprimée en nombre de secondes depuis le 1er janvier 1970. C'est l'unité utilisée par la fonction time d'UNIX
+			\item secure rend le cookie inaccessible si la connexion n'est pas sécurisée (HTTPS)
+			\item httpOnly rend le cookie inaccessible à d'autres protocoles que le HTTP
+		\end{itemize}
+	\item Le cookie n'est accessible qu'au prochain chargement d'une page.
+\end{itemize}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+  $value = 'toto';
+   // Création du cookie qui expirera dans une heure accessible en HTTP seulement
+  setcookie("TestCookie", $value, time()+3600, null, null, false, true);
+?>
+
+<?php
+ //Destruction du cookie
+ setcookie ("TestCookie", "", time() - 3600,  null, null, false, true);
+?>
+\end{lstlisting}	
+
+
+\end{frame}
+
+\begin{frame}   {Les fichiers (1/2)}
+\begin{itemize}
+	\item \$fi = fopen(nom\_fichier, mode) : ouverture d'un fichier (possibilité de fournir  une URL HTTP ou FTP pour les fichiers distants). Retourne une ressource représentant le pointeur de fichier, ou FALSE si une erreur survient.
+	\item fclose() : fermeture du fichier
+	\item fgets (\$fi) Retourne une string, la ligne courante sur laquelle se trouve le pointeur du fichier.\\
+	fgetss permet de lire une ligne dans un fichier en supprimant les balises HTML
+	\item rtrim(fgets (\$fi)) Idem mais on enlève le retour chariot.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}   {Les fichiers (2/2)}
+\begin{itemize}
+	\item file (\$fi, FILE\_IGNORE\_NEW\_LINES) Retourne un tableau de strings avec le contenu du fichier
+	\item feof(\$fi) Retourne TRUE si le pointeur est à la fin du fichier.
+	\item rewind(\$fi), fseek(\$fi, position) déplace le pointeur dans le fichier.
+	\item et encore beaucoup d'autres fonctions pour les fichiers ...
+	\item et d'autres pour manipuler les répertoires ... 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]    {Formulaires et upload de fichiers}
+\includegraphics[height=2cm]{FormFile.png}
+\lstset{language=HTML, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+
+<FORM action="traitementFormFilm.php" method="POST" enctype="multipart/form-data">
+	<input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+	<input type="file" name="mon_fichier" />
+	<input type="submit" value="Valider">
+</FORM>
+\end{lstlisting}
+Le fichier est dans un dossier temporaire sur le serveur. Si on souhaite le garder, il faudra le placer ailleurs (dans un dossier du site par exemple). Si au contraire on décide de ne pas garder le fichier, il suffit de ne pas le déplacer ; il sera effacé automatiquement lorsque le script de traitement aura fini d'être exécuté.
+\end{frame}
+
+\begin{frame}    {Le tableau de superglobales \$\_FILES}
+\begin{itemize}
+	\item  \$\_FILES['mon\_fichier']['name'] contient le nom du fichier
+	\item  \$\_FILES['mon\_fichier']['type'] contient le type du fichier
+	\item  \$\_FILES['mon\_fichier']['size'] contient sa taille en octets
+	\item  \$\_FILES['mon\_fichier']['tmp\_name'] contient l'emplacement temporaire du fichier
+	\item  \$\_FILES['mon\_fichier']['error'] contient le code d'erreur (0 si pas d'erreur; 1 et 2 trop gros; ...)
+\end{itemize}
+\begin{itemize}
+	\item move\_uploaded\_file(\$\_FILES['mon\_fichier']['tmp\_name'], \$nouveau\_nom) permet de déplacer un fichier téléchargé par PHP
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]    {Les expressions régulières}
+\begin{itemize}
+	\item POSIX ou PCRE (+ rapide et performantes) pour PHP
+	\item POSIX pour MySQL 
+\end{itemize}
+
+\lstset{language=PHP, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+if(preg_match('#^[a-zA-Z]+.txt$#', $_FILES['nom_fichier']['name'])
+\end{lstlisting}
+\begin{itemize}
+	\item métacaractères : 
+\begin{lstlisting}
+	# ^ $ () [] {} ? + * .  | \
+\end{lstlisting}
+	\item l'option i pour ignorer la casse avec les regex PCRE
+	\item les fonctions PCRE preg\_match, preg\_replace, ...
+\end{itemize}
+
+
+%\lstset{language=SQL, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+%\begin{lstlisting}
+%SELECT *
+%FROM Actor
+%WHERE Nom
+%REGEXP '^H'
+%\end{lstlisting}
+\end{frame}
+
+
+\end{document}

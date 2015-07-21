@@ -1,0 +1,291 @@
+\documentclass{beamer}
+\title{Programmation Web}
+%\institute {TP2}
+\date{\today}
+
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usetheme{Madrid}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{textcomp}
+
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+%\usecolortheme{seagull}
+\definecolor{fondtitre}{rgb}{0.20,0.43,0.09}  % vert fonce
+\definecolor{coultitre}{rgb}{0.41,0.05,0.05}  % marron
+%\setbeamercolor{normal text}{fg=black}
+%\setbeamercolor{alerted text}{fg=black}
+%\setbeamercolor{frametitle}{fg=black,bg=white}
+%\setbeamercolor{section in head/foot}{fg=black,bg=white}
+%\setbeamercolor{subsection in head/foot}{fg=black,bg=white}
+%\setbeamercolor{author in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title in head/foot}{fg=black,bg=white}
+%\setbeamercolor{date in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title}{bg=white}
+%\setbeamercolor{titlelike}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+
+
+% Debut - Rédaction du diaporama
+\begin{document}
+
+ %Une page de présentation
+\begin{frame}
+\titlepage
+ 
+\end{frame}
+
+
+\begin{frame}  {Les variables superglobales}
+\begin{itemize}
+	\item Elles sont écrites en majuscules avec un underscore au début
+	\item Ce sont des tableaux associatifs 
+	\item Elles sont créées à chaque chargement de page 
+\end{itemize}
+
+\begin{itemize}
+	\item \$\_GET contient les données envoyées par l'URL
+	\item \$\_POST contient les informations transmises par les formulaires avec la méthode POST
+	\item \$\_FILES contient la liste des fichiers envoyés par un formulaire
+	\item \$\_SERVER Ce sont des valeurs renvoyées par le serveur. \$\_SERVER['REMOTE\_ADDR'] donne l'adresse IP du client qui demande le chargement de la page.
+	\item \$\_SESSION contient les variables de session
+	\item \$\_COOKIE contient les valeurs des cookies enregistrés sur l'ordinateur du visiteur
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]  {Les tableaux}
+\begin{itemize}
+	\item Ce sont des ensembles de clé/valeur
+	\item Les clés peuvent être des entiers ou des chaînes de caractères
+	\item Les clés et les valeurs peuvent être de types différents dans un même tableau
+\end{itemize}
+
+Création
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+$prenoms=array('François', 'Michel', 'Nicole'); 
+#crée un tableau numéroté avec des clés qui vont de 0 à 2
+$prenoms[]='Véronique'; # la clé sera la clé entière max du tableau + 1 donc ici 3 
+$coords = array (
+    'prenom' => 'François',
+    'nom' => 'Dupont',
+    'adresse' => '3 rue du Paradis',
+    'ville' =>'Paris' );
+ $coords['code_postal']='75012'; #creation d'une nouvelle case
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]  {Parcourir un tableau}
+Connaître sa taille ou l'afficher pour debugging:
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   $taille = count($tab);
+   $champs = array_keys($coords);
+   print_r($tab);
+\end{lstlisting}
+	
+Pour parcourir les éléments et/ou les clés :
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   for ($i=0; $i<$taille; $i++) 
+      echo $prenoms[$i];
+   foreach ($prenoms as $val) 
+      echo $val;
+   foreach ($coords as $val) 
+      echo $val;
+   foreach ($coords as $cle => $val) 
+      echo $cle.' vaut '.$val;
+   foreach ($prenoms as $cle => $val) 
+      echo $cle.' vaut '.$val;
+\end{lstlisting}
+
+Destruction d'un élément du tableau :
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   unset($prenoms[0]); # ça ne décale rien
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]  {Fonction}
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+
+  function nomDeLaFonction($param1, $param2=5)
+  {
+    // Bloc d'instructions
+    return $variableContenantValeurDeRetour;
+  }
+
+\end{lstlisting}
+\begin{itemize}
+	\item Portée locale des variables d'une fonction par défaut
+	\item Une fonction peut retourner 
+	\begin{itemize}
+		\item rien (procédure)
+		\item une seule valeur de type simple
+		\item un type structuré comme un tableau de valeurs ou un objet
+	\end{itemize}
+	\item On peut faire un passage par référence d'un paramètre en le précédant de \& dans la ligne de déclaration pour les variables simples et les tableaux. Un passage d'objet se fait toujours par référence.
+	\item Une fonction peut avoir un nombre variable de paramètres.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]  {Connexion à une base de données MySQL V1.1}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+function connect_db()
+{
+  $host="localhost";
+  $user="goncalve";
+  $password="xxxxxxxx";
+  $nombase="Cinema";
+  #Connexion et choix de la banque
+  $conn = mysql_connect($host, $user, $password) or die ("Connexion impossible");
+  mysql_select_db($nombase, $conn) or die ("Sélection de base impossible");
+	
+  mysql_query("SET NAMES 'utf8'");
+  return $conn;
+}
+?>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]  {Connexion à une base de données MySQL}
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<?php
+function connexion_db()
+{
+  $host="localhost";
+  $user="goncalve";
+  $password="xxxxxxxx";
+  $nombase="Cinema";
+  try
+  {
+    $bdd=new PDO('mysql:host='.$host.';dbname='.$nombase, $user, $password);
+  }
+    catch(Exception $e)
+  {
+    die('Erreur : '.$e->getMessage());
+  }
+  $bdd->exec('SET NAMES utf8');
+  return $bdd;
+}
+?>
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]   {Insertion dans une table}
+Toujours penser à neutraliser les données utilisateurs avant de les utiliser.\\
+V1.2
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   $movieid= (int)$_POST['movieid'];
+   $ip=mysql_real_escape_string($_POST['source']); # si magic_quotes_gpc est à Off voir phpinfo()
+   $query='INSERT INTO Vote (MovieID, IP) VALUES('.$movieid.', "'.$ip.'")';
+   mysql_query($query) or die ("Insertion impossible");
+\end{lstlisting}
+V2.2
+ \lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+   $req0= $bdd->prepare('INSERT INTO Vote (MovieID, IP) VALUES(:movieid, :ip)');
+   $req0->execute(array(
+                'movieid' => $_POST['movieid'],
+                'ip' => $_POST['source'])
+                );
+   $req0->closeCursor();
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]   {Affichage d'une sélection V1.3}
+V1.3
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+ $query='SELECT * from Movie';
+ $req = mysql_query($query)or die ("Requête 1 impossible");
+ $ligne=mysql_fetch_array($req);
+ echo "<table>";
+ do
+ {
+    echo '<tr>';
+    foreach ($ligne as $v)
+    {
+       echo '<td>'.$v.'</td>'; 
+       echo "\n";
+    }
+    echo '</tr>';
+  } while($ligne=mysql_fetch_array($req));
+  mysql_free_result($req);
+  echo '</table>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]   {Affichage d'une sélection V2.3}
+V1.3
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+ $req= $bdd->prepare('SELECT * from Movie'); 
+ $req->execute() or die(print_r($req->errorInfo()));
+ $ligne=$req->fetch(PDO::FETCH_ASSOC);
+ do
+{
+    echo '<tr>';
+    foreach ($ligne as $v)
+    {
+        echo '<td>'.$v.'</td>';
+        echo "\n";
+    }
+    echo '</tr>';
+  } while($ligne=$req->fetch(PDO::FETCH_ASSOC));
+  $req->closeCursor();
+  echo '</table>
+ \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]   {Compter le nombre de résultats et Fermer la connexion}
+V1.4
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+  $count=mysql_num_rows($req);
+  mysql_close($conn);
+\end{lstlisting}
+V2.4
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+  $count = $req->rowCount();
+  $bdd=null; # ou fermeture automatique à la fin du script
+\end{lstlisting}
+\end{frame}
+
+\begin{frame} {phpMyAdmin}
+C'est un outil permettant de manipuler une base de données MySQL proposé par presque tous les hébergeurs. Il est constitué par un ensemble de pages PHP toutes prêtes dont on se sert pour gagner du temps.
+\begin{itemize}
+	\item http://iutdoua-webetu.univ-lyon1.fr/phpMyAdmin
+	\begin{itemize}
+		\item login habituel pxxxxxx
+		\item password code BIP
+		\item SET PASSWORD FOR 'mon\_login'@'\%'=PASSWORD('mon\_mdp');\\
+		ATTENTION, le mot de passe MySQL doit être différent de celui de votre session, votre mail ...
+	 \end{itemize}
+	 \item http://localhost:[port\_apache]/phpMyAdmin/
+\end{itemize}	
+
+\end{frame}
+
+
+
+\end{document}

@@ -1,0 +1,338 @@
+\documentclass{beamer}
+\title{Programmation Web}
+%\institute {Parties 1 à 3}
+\date{\today}
+
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usetheme{Madrid}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{textcomp}
+
+\usepackage[latin1]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{fondcode}{rgb}{0.95,0.95,0.95}
+
+\definecolor{fondtitre}{rgb}{0.20,0.43,0.09}  % vert fonce
+\definecolor{coultitre}{rgb}{0.41,0.05,0.05}  % marron
+%\usecolortheme{seagull}
+%\setbeamercolor{normal text}{fg=black}
+%\setbeamercolor{alerted text}{fg=black}
+%\setbeamercolor{frametitle}{fg=black,bg=white}
+%\setbeamercolor{section in head/foot}{fg=black,bg=white}
+%\setbeamercolor{subsection in head/foot}{fg=black,bg=white}
+%\setbeamercolor{author in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title in head/foot}{fg=black,bg=white}
+%\setbeamercolor{date in head/foot}{fg=black,bg=white}
+%\setbeamercolor{title}{bg=white}
+%\setbeamercolor{titlelike}{fg=black,bg=white}
+%\setbeamercolor{structure}{fg=white}
+
+
+% Debut - Rédaction du diaporama
+\begin{document}
+
+% Une page de présentation
+\begin{frame}
+\titlepage
+
+Note globale : Projet + Contrôle Continu \\
+ Isabelle Gonçalves - isabelle.goncalves@univ-lyon1.fr\\
+\vspace{1 cm}
+ \begin{block}{Remerciements} 
+Plusieurs transparents sont largement inspirés des documents de cours de Michaël Mrissa. D'autres du tutoriel de Mathieu Nebra du site openclassrooms.
+\end{block}
+ 
+\end{frame}
+
+
+\begin{frame}  {Pré-requis}
+Savoir-faire concernant les sites web statiques : HTML5 + CSS3
+\begin{itemize}
+	\item Module de S1 : \\
+	http\string://champin.net/enseignement/intro-web/
+	http\string://iutdoua-webetu.univ-lyon1.fr/\~{}isabelle.goncalves/web
+	\item OpenClassrooms :\\
+	Apprenez à créer votre site web avec HTML5 et CSS3 (Tutoriel et livre de Mathieu Nebra (M@teo21))
+\end{itemize}
+
+\begin{block}{Acronymes} 
+HTML : Hypertext Markup Language\\
+CSS : Cascading Style Sheets
+\end{block}
+
+\begin{block}{Rappel pour votre site web IUT} 
+Vos pages doivent être dans votre répertoire public\_html.
+Elles sont visibles sur :
+http\string://iutdoua-webetu.univ-lyon1.fr/\~{}votre\_login
+\end{block}
+
+\end{frame}
+
+\begin{frame}  {Documentation}
+\begin{itemize}
+	\item OpenClassrooms :\\
+	Concevez votre site web avec PHP et MYSQL(Tutoriel et livre de Mathieu Nebra (M@teo21))
+	\item \large{...}	
+\end{itemize}
+
+\begin{block}{Tester avec un serveur web local} 
+Installer un Pack Apache+ PHP + MySQL : WAMP pour Windows, MAMP pour MacOSX, XAMPP pour Linux.\\
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}  {Qu'est-ce que PHP ? }
+\begin{itemize}
+	\item c'est un langage interprété,
+	\item son code peut être intégré dans celui des pages HTML,
+	\item il permet de traiter des pages web dynamiques,
+	\item il est exécuté sur le serveur,
+	\item en combinaison avec MySQL, il permet de stocker et d'accéder à des informations dans une base de données.
+\end{itemize}
+\begin{block}{Acronyme} 
+PHP : Hypertext Preprocessor
+\end{block}
+\end{frame}
+
+\begin{frame}{Comment ça marche ? }
+\includegraphics[height=5cm]{client-serveur.png}
+\end{frame}
+
+
+\begin{frame}[fragile] {Page index.php sur le disque du serveur}
+
+\lstset{language=html, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+  <meta charset="utf-8">
+  <TITLE>Page PHP</TITLE>
+</HEAD>
+<BODY>
+ <P>Page qui affiche Bonjour en <strong>PHP</strong></P>
+   <?php
+       echo "Bonjour";
+   ?>
+</BODY>
+</HTML>
+\end{lstlisting}
+
+\begin{block}{Attention} 
+Les fichiers HTML contenant du code PHP ont l'extension .php
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]  {Page reçue par le client}
+
+\includegraphics[height=2cm]{client-indexPHP.png}
+Affichage du source sur le client :
+\lstset{language=html, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+    <meta charset="utf-8">
+    <TITLE>Page PHP</TITLE>
+</HEAD>
+<BODY>
+ <P>Page qui affiche Bonjour en <strong>PHP</strong></P>
+ Bonjour   
+</BODY>
+</HTML>
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}  {divers PHP}
+
+\begin{itemize}
+	\item Les commentaires
+	\begin{itemize}
+		\item multilignes /*    */
+		\item monolignes \# , //
+	\end{itemize}
+	\item Les instructions se terminent par ;
+	\item insensible à la casse pour les noms de fonctions mais pas pour les noms de variables.
+	\item documentation en français accessible à http\string://www.php.net/manual/fr
+	\item Afficher les erreurs :
+	\begin{itemize}
+		\item juste pendant la phase de mise en place-test du site si possible
+		\item se configure dans le fichier de configuration php.ini
+		\item ou dans les scripts :
+		\begin{itemize}
+			\item ini\_set('display\_errors','1'); 
+			\item error\_reporting(E\_ALL);
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\begin{block}{phpinfo();} 
+Cette fonction permet d'afficher la configuration du serveur pour l'interprétation des pages PHP.
+\end{block}
+\end{frame}
+
+\begin{frame}  {Intégrer des fichiers externes}
+\begin{itemize}
+	\item PHP a été pensé pour la conception d'applications Web
+	\item permet de définir des "briques de base" qui peuvent être réutilisées plusieurs fois
+	\item permet de répercuter facilement un changement sur l'ensemble de l'application
+	\item Les fonctions d'intégration :
+	\begin{itemize}
+		\item include ("header.php"); inclut les lignes du fichier header.php avec un warning si il n'existe pas.
+		\item  require ("header.php"); inclut les lignes du fichier header.php avec un erreur fatale si il n'existe pas (sortie du script).
+		\item include\_once et require\_once sont les équivalents  avec vérification avant intégration que c'est la première fois. Dans le cas contraire, le fichier n'est pas intégré. 
+	\end {itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}  {Les variables}
+\begin{itemize}
+	\item Leur identifiant est toujours précédé de \$
+	\item Pas de déclaration, l'affectation détermine le type de la variable
+	\item Les différents types :
+	\begin{itemize}
+		\item booléens (true false)
+		\item nombres entiers
+		\item nombres à virgule
+		\item chaînes de caractères
+		\item tableaux
+		\item objets (programmation orientée objet)
+	\end {itemize}
+	\item Le cast est possible comme en C. 
+	\item Beaucoup de fonctions mathématiques et pour la manipulation des strings (http\string://www.php.net/manual/fr/ref.strings.php)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}  {L'affichage et les guillemets}
+\begin{itemize}
+	\item \$age=17;
+	\item echo "L'utilisateur a \$age ans";
+	\item echo "L'utilisateur a \$age ans";
+	\item echo 'L$\backslash$' utilisateur a \$age ans'  ;   \#\$age s'affiche tel quel
+	\item echo 'L$\backslash$'utilisateur a '. \$age .' ans';
+	\item printf("L'utilisateur a \%d ans$\backslash$n", \$age);
+\end{itemize}
+\end{frame}
+
+\begin{frame}   {Les structures de contrôle}
+
+\begin{itemize}
+	\item Les opérateurs de comparaison et les opérateurs logiques identiques au C. + AND + OR
+	\item Les conditions if/else (+elseif) et le switch/case comme en C.
+	\item Les boucles for et while comme en C.
+\end{itemize}
+
+\begin{block}{Attention} 
+Le test d'égalité s'écrit donc avec un ==
+\end{block}
+%
+%\begin{block}{Les ternaires} 
+%	\$majeur= (\$age>=18) ? true : false;
+%\end{block}
+
+\end{frame}
+
+\begin{frame}   {Transmettre des données via l'URL}
+\begin{itemize}
+	\item On peut ajouter des paramètres dans une URL
+	\item Ils sont reçus dans un tableau associatif et accessible dans \$\_GET['nom\_du\_paramètre']
+\end{itemize}
+
+\begin{center}
+\includegraphics[height=3.5cm]{URL.png}
+\end{center}
+
+\begin{block}{Acronyme} 
+URL : Uniform Resource Locator dont la taille est limitée.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]  {Transmettre des données via des formulaires}
+
+\begin{itemize}
+	\item Les formulaires permettent d'échanger des informations avec le visiteur via l'URL (GET) ou pas (POST). 
+	\item Le HTML permet de créer le formulaire et le PHP permet de traiter les informations entrées dans le formulaire.
+\end{itemize}
+
+\lstset{language=html, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+
+\begin{lstlisting}
+<form method="post" action="traitement.php">
+   <!--éléments du formulaire -->
+</form>
+\end{lstlisting}
+
+\begin{itemize}
+	\item La balise FORM sert de conteneur pour accueillir les éléments ou composants du formulaire : un bouton, une zone de texte ...
+	\item Exemple : http\string://iutdoua-webetu.univ-lyon1.fr/~isabelle.goncalves/web/formulaire.html
+	\item Dans traitement.php, les informations envoyées sont dans un tableau associatif et accessible dans \$\_POST['valeur\_de\_name'] ou \$\_GET['valeur\_de\_name']
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]  {Faille XSS: Cross Site Scripting}
+
+\begin{itemize}
+	\item C'est une injection de code dans une page web, grâce à une variable faillible (non ou mal sécurisée) qui sera affichée.
+	\item Cela peut se faire via un formulaire.
+	\item Elle résulte d'une trop grande confiance accordée aux entrées de l'utilisateur.
+\end{itemize}
+
+\begin{exampleblock}{Démo} 
+formulaire\_injection.html et traitement1.php
+\end{exampleblock}
+
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]  {Vérification des données transmises}
+
+\begin{itemize}
+	\item Indispensable pour éviter que le texte puisse ensuite être lu comme du code javascript à interpréter ...
+	\item Solutions : 
+	\begin{itemize}
+		\item limiter la longueur dans les zones de texte à ce qu'on attend même si on voit un peu large
+		\item neutraliser les caractères spéciaux avec la fonction htmlspecialchars
+		\item effectuer des transtypages (cast) pour obliger les données à être du bon type ou vérifier leur type avec is\_float, is\_int, ...
+		\item vérifier que les valeurs sont dans une gamme attendue avant de lancer des calculs
+	\end{itemize}	
+\end{itemize}
+
+\lstset{language=php, commentstyle=\color{blue}\textit, backgroundcolor=\color{fondcode}, keywordstyle=\color{red}\bfseries, basicstyle=\ttfamily\small, showstringspaces=false, stringstyle=\color{violet}, breaklines=true, tabsize=1}
+\begin{lstlisting}
+$nb=(int)$_POST['nbenf']);
+$texte=htmlspecialchars($_POST['message']);
+\end{lstlisting}
+
+
+\end{frame}
+
+\begin{frame}{Rappel sur FileZilla}
+Pour ceux qui travaillent sur leur portable et qui souhaitent tester leur travail sur le serveur de l'IUT, configurer une connexion avec FileZilla pour déposer vos fichiers par FTP.
+
+\begin{itemize}
+	\item Hôte : iutdoua-samba.univ-lyon1.fr
+	\item Port : 990
+	\item Protocole : FTP - Protocole de Transfert de Fichiers
+	\item Chiffrement : Connexion FTP explicite sur TLS
+\end{itemize}
+
+Déposer votre travail dans le répertoire public\_html/TP1 pour y avoir accès à partir de l'adresse : \\
+http:///iutdoua-webetu.univ-lyon1.fr/\~{}votre\_login/TP1
+
+\end{frame}
+
+
+\end{document}
